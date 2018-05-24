@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Data privacy banner</title>
+  </head>
+  <body>
+<script>
+  /* Utility funciton to handle cookies */
+  function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000 ));
+      expires = '; expires=' + date.toUTCString();
+    }
+    document.cookie = name + '=' + (value || "") + expires + '; path=/';
+  }
+  /* determine if it"s a small device */
+  var windowWidth = window.screen.width < window.outerWidth ?
+    window.screen.width : window.outerWidth;
+  var mobile = windowWidth < 570;
+
+  /* Create container */
+  var container = document.createElement("div");  
+  container.setAttribute("id", "vPrivacyBanner");
+  container.style.position = "fixed"; 
+  container.style.top = 0; 
+  container.style.left = 0; 
+  container.style.width = "100%"; 
+  //container.style.height = "100px"; 
+  container.style.background = "white"; 
+  container.style.zIndex = 99 * 99 * 99 * 1000; 
+  container.style.boxShadow = "0 1px 3px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.23)";
+
+
+  /* Create content element */
+  var content = document.createElement("div");  
+  content.style.padding = mobile ? "10px 10px" : "10px 9%";
+  content.style.display = "flex";
+  content.style.flexWrap = "wrap";
+
+  /* Create cookie image container and element */
+  var imgBox = document.createElement("div");  
+  imgBox.style.display = "flex";
+  imgBox.style.alignSelf = "center";
+  imgBox.style.justifyContent = "flex-end";
+  imgBox.style.width = "40px";
+
+  var img = document.createElement("img");
+  img.setAttribute("src",
+    "https://s3.eu-central-1.amazonaws.com/ventura-general/uploads/cookie.svg");
+  img.style.height = "40px";
+  img.style.width = "40px";
+  img.style.verticalAlign = "middle";
+
+  /* Create text container and element */
+  var textBox = document.createElement("div");  
+  textBox.style.alignSelf = "center";
+  textBox.style.display = "flex";
+  textBox.style.width = "80%";
+
+  var text = document.createElement("div");
+  text.style.padding = "0 10px";
+  text.style.display = "inline";
+  text.style.lineHeight = "25px";
+  text.innerHTML = "We are using cookies to give you the best " +
+  "experience if you are checking our website, you accepted our terms and " +
+  "conditions but you can change the configuration here on " +
+  "<a href=\"/datenschutzerklarung\" style=\"color: #006228;font-weight: bolder;\">privacy policy</a>.";
+
+  /* Create close button container and element */
+  var closeBox = document.createElement("div");  
+  closeBox.style.alignSelf = "center";
+  closeBox.style.display = "flex";
+
+  var close = document.createElement("button");
+  close.style.height = "30px";
+  close.style.width = "30px";
+  close.style.borderRadius = "50%";
+  close.style.border = "2px solid #006228";
+  close.style.color = "#006228";
+  close.style.fontSize = "21px";
+  close.style.fontWeight = "bolder";
+  close.style.padding = 0;
+  close.style.cursor = "pointer";
+  close.style.outline = 0;
+  close.innerText = "✕";
+  close.onclick = function() {
+    setCookie("show_privacy_popup", "false");
+    container.style.display = "none";
+    document.getElementById("vPrivacyBanner").outerHTML = "";
+  }
+
+  /* glue everything */
+  imgBox.appendChild(img);
+  textBox.appendChild(text);
+  closeBox.appendChild(close);
+
+  content.appendChild(imgBox);
+  content.appendChild(textBox);
+  content.appendChild(closeBox);
+
+  container.appendChild(content);
+
+  /* add to website */
+  document.body.appendChild(container);
+</script>
+  </body>
+</html>
