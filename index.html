@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Data privacy banner</title>
+    <title>Banner</title>
   </head>
   <body>
 <script>
@@ -29,7 +29,6 @@
   container.style.top = 0; 
   container.style.left = 0; 
   container.style.width = "100%"; 
-  //container.style.height = "100px"; 
   container.style.background = "white"; 
   container.style.zIndex = 99 * 99 * 99 * 1000; 
   container.style.boxShadow = "0 1px 3px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.23)";
@@ -37,16 +36,18 @@
 
   /* Create content element */
   var content = document.createElement("div");  
-  content.style.padding = mobile ? "10px 10px" : "10px 9%";
-  content.style.display = "flex";
-  content.style.flexWrap = "wrap";
+  //content.style.padding = mobile ? "10px 10px" : "10px 9%";
+  content.style.maxWidth = "1175px";
+  content.style.margin = "0 auto";
+  content.style.padding = "15px";
+  content.style.overflow = "hidden";
 
   /* Create cookie image container and element */
   var imgBox = document.createElement("div");  
-  imgBox.style.display = "flex";
-  imgBox.style.alignSelf = "center";
-  imgBox.style.justifyContent = "flex-end";
-  imgBox.style.width = "40px";
+  imgBox.style.width = mobile ? "100%" : "40px";
+  imgBox.style.float = mobile ? "none" : "left";
+  imgBox.style.paddingBottom = mobile ? "5px" : 0;
+  imgBox.style.textAlign = "center";
 
   var img = document.createElement("img");
   img.setAttribute("src",
@@ -57,14 +58,12 @@
 
   /* Create text container and element */
   var textBox = document.createElement("div");  
-  textBox.style.alignSelf = "center";
-  textBox.style.display = "flex";
-  textBox.style.width = "80%";
+  textBox.style.margin = mobile ? 0 : "0 40px";
 
   var text = document.createElement("div");
-  text.style.padding = "0 10px";
-  text.style.display = "inline";
-  text.style.lineHeight = "25px";
+  text.style.textAlign = mobile ? "center" : "justify";
+  text.style.padding = mobile ? 0 : "0 10px";
+  text.style.lineHeight = mobile ? "20px" : "25px";
   text.innerHTML = "We are using cookies to give you the best " +
   "experience if you are checking our website, you accepted our terms and " +
   "conditions but you can change the configuration here on " +
@@ -72,21 +71,22 @@
 
   /* Create close button container and element */
   var closeBox = document.createElement("div");  
-  closeBox.style.alignSelf = "center";
-  closeBox.style.display = "flex";
+  closeBox.style.float = "right";
+  closeBox.style.width = "30px";
 
   var close = document.createElement("button");
-  close.style.height = "30px";
-  close.style.width = "30px";
+  close.style.height = mobile ? "23.5px" : "30px";
+  close.style.width = mobile ? "23.5px" : "30px";
   close.style.borderRadius = "50%";
+  close.style.background = "white";
   close.style.border = "2px solid #006228";
   close.style.color = "#006228";
-  close.style.fontSize = "21px";
+  close.style.fontSize = mobile ? "17px" : "21px";
   close.style.fontWeight = "bolder";
   close.style.padding = 0;
   close.style.cursor = "pointer";
   close.style.outline = 0;
-  close.innerText = "✕";
+  close.innerText = "✖";
   close.onclick = function() {
     setCookie("show_privacy_popup", "false");
     container.style.display = "none";
@@ -98,9 +98,9 @@
   textBox.appendChild(text);
   closeBox.appendChild(close);
 
+  content.appendChild(closeBox);
   content.appendChild(imgBox);
   content.appendChild(textBox);
-  content.appendChild(closeBox);
 
   container.appendChild(content);
 
